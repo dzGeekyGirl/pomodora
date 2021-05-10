@@ -1,0 +1,4 @@
+add a sound when you start and stop the pomodoro done
+add counting of pomodoro how mutch round done
+add a brak after the end break added but not in the end more in the begining
+integrate new template

@@ -1,0 +1,210 @@
+*{font-family: 'Roboto', 'Noto', sans-serif;}
+
+body{
+  display: flex;
+  display: -webkit-flex;
+  display: -ms-flex;
+  
+  width: 100%;
+  height: 100%;
+  -webkit-justify-content: center;
+    -ms-justify-content: center;
+      justify-content: center;
+  
+  -webkit-align-items: center;
+    -ms-align-items: center;
+      align-items: center;
+}
+
+/* pages css */
+pages  {
+  color: white;
+  text-align: center;
+  display: block;
+  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+pages .container {
+  white-space: nowrap;
+  font-size: 0px;
+}
+
+pages page{
+  display: inline-block;
+  -webkit-transition: 800ms ease-out opacity;
+    -moz-transition: 800ms ease-out opacity;
+      -ms-transition: 800ms ease-out opacity;
+        transition: 800ms ease-out opacity;
+  
+  font-size: 50px;
+}
+
+pages page.active {
+  opacity: 1 !important;
+}
+
+/* tabs css */
+tab-layout {
+  background-color: #00bcd4;
+  
+  display: flex;
+  display: -webkit-flex;
+  display: -ms-flex;
+  
+  -webkit-align-items: center;
+    -ms-flex-align: center;
+      
+  -webkit-align-items: center;
+    -ms-align-items: center;
+      align-items: center;
+      
+  height: 48px;
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  
+  -webkit-user-select: none;
+    -ms-user-select: none;
+      user-select: none;
+        
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+
+
+  -webkit-flex-direction: row-reverse;
+    -ms-flex-direction: row-reverse;
+      flex-direction: row-reverse;
+}
+
+tab-layout .tabs_container{
+  position: relative;
+  height: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  
+  -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  
+  touch-action: pan-y;
+}
+
+tab-layout .tabs_content{
+  position: absolute;
+  white-space: nowrap;
+  height: 100%;
+  -moz-flex-basis: auto;
+    -ms-flex-basis: auto;
+      flex-basis: auto;
+}
+
+tab-layout[scrollable] .tabs_content{
+  position: absolute;
+  white-space: nowrap;
+}
+
+tab-layout tab .tab-content {
+  height: 100%;
+  
+  -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    
+  -webkit-transition: opacity 0.1s cubic-bezier(0.4, 0.0, 1, 1);
+    -moz-transition: opacity 0.1s cubic-bezier(0.4, 0.0, 1, 1);
+      -ms-transition: opacity 0.1s cubic-bezier(0.4, 0.0, 1, 1);
+        transition: opacity 0.1s cubic-bezier(0.4, 0.0, 1, 1);
+  
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+      flex-direction: row;
+  -webkit-align-items: center;
+    -ms-flex-align: center;
+      align-items: center;
+  -webkit-justify-content: center;
+    -ms-flex-pack: center;
+      justify-content: center;
+  -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+}
+
+tab-layout tab{
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  
+  -webkit-align-items: center;
+    -ms-flex-align: center;
+      align-items: center;
+  -webkit-justify-content: center;
+    -ms-flex-pack: center;
+      justify-content: center;
+  -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  position: relative;
+  padding: 0 12px;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-font-smoothing: antialiased;
+  
+  color: rgba(255, 255, 255, 0.8);
+  height: 100%;
+}
+
+tab-layout .tabs_content{
+  padding-left: 16px;
+}
+
+tab-layout tab[aria-selected="true"]{
+  color: rgba(255, 255, 255, 1);
+}
+
+tab-layout .indicator{
+  height: 2px;
+  background-color: #ffff8d;
+  position: absolute;
+  bottom: 0;
+}
+
+tab-layout .indicator.right{
+  transition: right 200ms;
+}
+
+tab-layout .indicator.left{
+  transition: left 200ms;
+}
+
+
+/* demo */
+.demo{
+  width:420px;
+}
+
+.demo pages page{
+  width: 100%;
+  height: 100%;
+  padding: 80px 0;
+}
+
+.demo pages page:nth-child(1) {
+  background-color: #4285f4;
+}
+
+.demo pages page:nth-child(2) {
+  background-color: #db4437;
+}
+
+.demo pages page:nth-child(3) {
+  background-color: #0f9d58;
+}
+
+.demo pages page:nth-child(4) {
+  background-color: #76daff;
+}

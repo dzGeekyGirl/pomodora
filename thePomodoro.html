@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Material Tabs &amp; Pages</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'><link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div ng-controller="mainCtrl" class="demo">
+  <tab-layout scrollable selected="current">
+    <tab><i class="material-icons">work</i></tab>
+    <tab><i class="material-icons">free_breakfast</i></tab>
+    <tab><i class="material-icons">backup</i></tab>
+    <tab><i class="material-icons">camera</i>&nbsp;camera</tab>
+  </tab-layout>
+  
+  <pages selected="current">
+    <page>
+<p id="demo" class="timer">30:00</p>
+<button onclick="pause()" id="buttonP" class="button">Start</button>
+</page>
+    <page><p id="shorttimer" class="timer">15:00</p>
+<button onclick="pauseShortBreak()" id="shortbreak" class="button">Start</button></page>
+    <page>C</page>
+    <page>D</page>
+  </pages>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.18/jquery.touchSwipe.min.js'></script><script  src="./script.js"></script>
+<script>
+  const CLICK_SOUND = "sound/click.ogg";
+  const SECONDE  = 1000; //1 seconde is 1000 milliseconde 
+  const pomodora = 30 * 60 * 1000;
+  const SHORT_BREAK = 5 * 60 * 1000;
+  const LONG_BREAK = 15 * 60 * 1000;
+  var round = 0;
+  var isPaused = true;
+  var timer = pomodora;
+  var round =0;
+  var x = setInterval(function myFunction() {
+  if(!isPaused){
+  timer = timer - SECONDE;
+  var minutes = Math.floor((timer % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((timer % (1000 * 60)) / 1000);
+    // Display the result in the element with id="demo"
+  if(seconds < 10) seconds = "0" + seconds;
+  document.getElementById("demo").innerHTML = minutes + ":" + seconds;
+  if(timer == 0){ //end of the timer
+  pause();
+  timer = pomodora;
+  round ++;
+  document.getElementById("round").innerHTML = round;
+  }
+
+  }
+}, SECONDE);
+function pause(){
+var snd = new Audio(CLICK_SOUND);
+snd.play();
+if(!isPaused ){
+isPaused = true;
+document.getElementById("buttonP").innerHTML = "Start";
+document.getElementById("buttonP").style.color = "rgb(219, 82, 77)";
+}else{
+isPaused = false;
+document.getElementById("buttonP").innerHTML = "Pause";
+document.getElementById("buttonP").style.color = "blue";
+if(!shortBreakIsPaused ){
+var answerShort = window.confirm("Are you sure you want to start a new round before your short break end ?");
+if(answerShort){
+pauseShortBreak();
+}else{
+isPaused = false;
+document.getElementById("buttonP").innerHTML = "Pause";
+document.getElementById("buttonP").style.color = "blue";
+}
+
+}
+}
+
+
+}
+var shortBreakIsPaused = true;
+var shortBreakTimer = SHORT_BREAK;
+var shortBreakTinerIsON = false;
+
+
+  var shortBreakId = setInterval(function myFunction() {
+  if(!shortBreakIsPaused){
+  shortBreakTimer = shortBreakTimer - SECONDE;
+  var minutes = Math.floor((shortBreakTimer % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((shortBreakTimer % (1000 * 60)) / 1000);
+    // Display the result in the element with id="shorttimer"
+  if(seconds < 10) seconds = "0" + seconds;
+  document.getElementById("shorttimer").innerHTML = minutes + ":" + seconds;
+  if(shortBreakTimer == 0){ //end of the timer
+  shortBreakTimer = SHORT_BREAK;
+  shortBreakIsPaused = true;
+  shortBreakTinerIsON = false;
+  }
+  }
+  
+
+}, SECONDE);
+
+
+function pauseShortBreak(){
+var snd = new Audio(CLICK_SOUND);
+snd.play();
+if(!shortBreakIsPaused ){
+shortBreakIsPaused = true;
+document.getElementById("shortbreak").innerHTML = "Start";
+document.getElementById("shortbreak").style.color = "rgb(219, 82, 77)";
+}else{
+shortBreakIsPaused = false;
+document.getElementById("shortbreak").innerHTML = "Pause";
+document.getElementById("shortbreak").style.color = "blue";
+if(!isPaused ){
+var answer = window.confirm("Are you sure you want to start a break before ending ?");
+if (answer) {
+    //some code
+  pause();
+}
+else {
+    //some code
+shortBreakIsPaused = true;
+document.getElementById("shortbreak").innerHTML = "Start";
+document.getElementById("shortbreak").style.color = "rgb(219, 82, 77)";
+  
+}
+
+}
+
+}
+}
+
+  </script>
+
+</body>
+</html>

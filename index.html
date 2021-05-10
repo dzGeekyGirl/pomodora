@@ -1,0 +1,235 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The Pomodora</title>
+  <meta name="description" content="pomodora">
+  <meta name="author" content="pomodora">
+
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<div id="working-timer" class="timerBlock">
+<p id="demo" class="timer">30:00</p>
+<button onclick="pause()" id="buttonP" class="button">Start</button>
+</div>
+<div id="short-break" class="timerBlock">
+<p id="shorttimer" class="timer">05:00</p>
+<button onclick="pauseShortBreak()" id="shortbreak" class="button">Start</button>
+</div>
+<div id="long-break" class="timerBlock">
+<p id="longtimer" class="timer">15:00</p>
+<button onclick="pauseLongBreak()" id="longbreak" class="button">Start</button>
+</div>
+<hr>
+<div>
+You did : <span id="round">0</span> rounds
+</div>
+<body>
+  <script>
+  const CLICK_SOUND = "sound/click.ogg"; //sound of the click
+  const SECONDE  = 1000; //1 seconde is 1000 milliseconde 
+  const pomodora = 30 * 60 * 1000; //timer working
+  const SHORT_BREAK = 5 * 60 * 1000;
+  const LONG_BREAK = 15 * 60 * 1000;
+  var round = 0;
+  var isPaused = true;
+  var timer = pomodora;
+  var round =0;
+  var x = setInterval(function myFunction() {
+	if(!isPaused){
+  timer = timer - SECONDE;
+  var minutes = Math.floor((timer % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((timer % (1000 * 60)) / 1000);
+    // Display the result in the element with id="demo"
+  if(seconds < 10) seconds = "0" + seconds;
+  document.getElementById("demo").innerHTML = minutes + ":" + seconds;
+  if(timer == 0){ //end of the timer
+  pause();
+  timer = pomodora;
+  round ++;
+  document.getElementById("round").innerHTML = round;
+  }
+
+  }
+}, SECONDE);
+function pause(){
+var snd = new Audio(CLICK_SOUND);
+snd.play();
+if(!isPaused ){
+isPaused = true;
+document.getElementById("buttonP").innerHTML = "Start";
+document.getElementById("buttonP").style.color = "rgb(219, 82, 77)";
+}else{
+isPaused = false;
+document.getElementById("buttonP").innerHTML = "Pause";
+document.getElementById("buttonP").style.color = "blue";
+//in case short break is working
+if(!shortBreakIsPaused ){
+var answerShort = window.confirm("Are you sure you want to start a new round before your short break end ?");
+if(answerShort){
+pauseShortBreak();
+}else{
+isPaused = false;
+document.getElementById("buttonP").innerHTML = "Pause";
+document.getElementById("buttonP").style.color = "blue";
+}
+
+}
+
+//in case the long break is working
+if(!longBreakIsPaused ){
+var answerShort = window.confirm("Are you sure you want to start a new round before your long break end ?");
+if(answerShort){
+pauseLongBreak();
+}else{
+isPaused = false;
+document.getElementById("buttonP").innerHTML = "Pause";
+document.getElementById("buttonP").style.color = "blue";
+}
+
+}
+
+}
+
+
+}
+
+//short break function
+var shortBreakIsPaused = true;
+var shortBreakTimer = SHORT_BREAK;
+var shortBreakTinerIsON = false;
+
+
+  var shortBreakId = setInterval(function myFunction() {
+  if(!shortBreakIsPaused){
+  shortBreakTimer = shortBreakTimer - SECONDE;
+  var minutes = Math.floor((shortBreakTimer % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((shortBreakTimer % (1000 * 60)) / 1000);
+    // Display the result in the element with id="shorttimer"
+  if(seconds < 10) seconds = "0" + seconds;
+  document.getElementById("shorttimer").innerHTML = minutes + ":" + seconds;
+  if(shortBreakTimer == 0){ //end of the timer
+  shortBreakTimer = SHORT_BREAK;
+  shortBreakIsPaused = true;
+  shortBreakTinerIsON = false;
+  }
+  }
+  
+
+}, SECONDE);
+
+
+function pauseShortBreak(){
+var snd = new Audio(CLICK_SOUND);
+snd.play();
+if(!shortBreakIsPaused ){
+shortBreakIsPaused = true;
+document.getElementById("shortbreak").innerHTML = "Start";
+document.getElementById("shortbreak").style.color = "rgb(219, 82, 77)";
+}else{
+shortBreakIsPaused = false;
+document.getElementById("shortbreak").innerHTML = "Pause";
+document.getElementById("shortbreak").style.color = "blue";
+if(!isPaused ){
+var answer = window.confirm("Are you sure you want to start a break before ending ?");
+if (answer) {
+    //some code
+	pause();
+}
+else {
+    //some code
+shortBreakIsPaused = true;
+document.getElementById("shortbreak").innerHTML = "Start";
+document.getElementById("shortbreak").style.color = "rgb(219, 82, 77)";
+	
+}
+}
+//in case the long break is working
+if(!longBreakIsPaused ){
+var answerShort = window.confirm("Are you sure you want to start a new round before your long break end ?");
+if(answerShort){
+pauseLongBreak();
+}else{
+shortBreakIsPaused = false;
+document.getElementById("buttonP").innerHTML = "Pause";
+document.getElementById("buttonP").style.color = "blue";
+}
+
+}
+
+}
+}
+
+//long break functions
+var longBreakIsPaused = true;
+var longBreakTimer = LONG_BREAK;
+var longBreakTimerIsON = false;
+
+
+  var longBreakId = setInterval(function myFunction() {
+  if(!longBreakIsPaused){
+  longBreakTimer = longBreakTimer - SECONDE;
+  var minutes = Math.floor((longBreakTimer % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((longBreakTimer % (1000 * 60)) / 1000);
+    // Display the result in the element with id="longtimer"
+  if(seconds < 10) seconds = "0" + seconds;
+  document.getElementById("longtimer").innerHTML = minutes + ":" + seconds;
+  if(longBreakTimer == 0){ //end of the timer
+  longBreakTimer = LONG_BREAK;
+  longBreakIsPaused = true;
+  longBreakTimerIsON = false;
+  }
+  }
+  
+
+}, SECONDE);
+
+
+function pauseLongBreak(){
+var snd = new Audio(CLICK_SOUND);
+snd.play();
+if(!longBreakIsPaused ){
+longBreakIsPaused = true;
+document.getElementById("longbreak").innerHTML = "Start";
+document.getElementById("longbreak").style.color = "rgb(219, 82, 77)";
+}else{
+longBreakIsPaused = false;
+document.getElementById("longbreak").innerHTML = "Pause";
+document.getElementById("longbreak").style.color = "blue";
+if(!isPaused ){
+var answer = window.confirm("Are you sure you want to start a break before ending ?");
+if (answer) {
+    //some code
+  pause();
+}
+else {
+    //some code
+longBreakIsPaused = true;
+document.getElementById("longbreak").innerHTML = "Start";
+document.getElementById("longbreak").style.color = "rgb(219, 82, 77)";
+  
+}
+
+}
+//in case short break is working
+if(!shortBreakIsPaused ){
+var answerShort = window.confirm("Are you sure you want to start long break before your short break end ?");
+if(answerShort){
+pauseShortBreak();
+}else{
+longBreakIsPaused = true;
+document.getElementById("buttonP").innerHTML = "Pause";
+document.getElementById("buttonP").style.color = "blue";
+}
+
+}
+
+}
+}
+
+  </script>
+</body>
+</html>
